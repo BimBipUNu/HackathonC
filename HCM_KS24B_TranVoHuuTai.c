@@ -1,9 +1,12 @@
-#include<stdio.h>
+#include <stdio.h>
+
 int main()
 {
-    int chose=0;
-    int active=0;
-    while(chose!=11)
+    int chose = 0;
+    int active = 0;
+    int size = 0;
+    int a[100]; 
+    while (chose != 11)
     {
         printf("\n============MENU===========\n");
         printf("1. Nhập số phần tử và giá trị cho mảng\n");
@@ -18,198 +21,202 @@ int main()
         printf("10. Đảo ngược thứ tự của các phần tử có trong mảng\n");
         printf("11. Thoát\n");
         printf("===========================\n");
-        printf("Lựa chọn của bạn: ");scanf("%d",&chose);
-        int size=0;
-        int a[size];
-        if (chose==1)
+        printf("Lựa chọn của bạn: ");
+        scanf("%d", &chose);
+        if (chose == 1)
         {
-            active=1;
-            printf("Nhập số lượng phần tử: ");scanf("%d",&size);
-            int a[size];
-            int aNumDontSame[size];
-            for(int i=0; i<size; i++)
+            active = 1;
+            printf("Nhập số lượng phần tử: ");scanf("%d", &size);
+            for (int i = 0; i < size; i++)
             {
-                printf("Nhập phần tử thứ %d: ",i);scanf("%d",&a[i]);
+                printf("Nhập phần tử thứ %d: ", i);
+                scanf("%d", &a[i]);
             }
-            printf("Lựa chọn của bạn: ");scanf("%d",&chose);
-        }
-        if(chose!=1 && active ==0)
+            continue;
+        } else if (chose != 1 && active == 0)
         {
             printf("Chưa có dữ liệu\n");
             continue;
         }
-        int count=0;
-        int countNgTo=0;
-        int max;
-        int theSecondMax;
+
+        int count = 0;
+        int countNgTo = 0;
+        int min;
+        int theSecondMin;
         int addIndex;
         int addNumber;
         int del;
         int start;
         int end;
         int findNum;
-        int indexADS=0;
-        switch(chose)
+        int indexADS = 0;
+
+        switch (chose)
         {
             case 1:
-                printf("Nhập số lượng phần tử: ");scanf("%d",&size);
-                for(int i=0; i<size; i++)
+                printf("Nhập số lượng phần tử: ");scanf("%d", &size);
+                for (int i = 0; i < size; i++)
                 {
-                    printf("Nhập phần tử thứ %d: ",i);scanf("%d",&a[i]);
+                    printf("Nhập phần tử thứ %d: ", i);scanf("%d", &a[i]);
                 }
                 break;
             case 2:
-                printf("Các pahanf tử trong mảng: ");
-                for(int i=0; i<size; i++)
+                printf("Các phần tử trong mảng: ");
+                for (int i = 0; i < size; i++)
                 {
-                    if(i==size-1)
+                    if (i == size - 1)
                     {
-                        printf("arr[%d]=%d",i,a[i]);
+                        printf("arr[%d]=%d", i, a[i]);
                         break;
                     }
-                    printf("arr[%d]=%d,",i,a[i]);
+                    printf("arr[%d]=%d, ", i, a[i]);
                 }
+                printf("\n");
                 break;
             case 3:
-                count=0;
-                countNgTo=0;
-                for(int i=0; i<size; i++)
+                countNgTo = 0;
+                for (int i = 0; i < size; i++)
                 {
-                    if(a[i]<2)
+                    if (a[i] < 2)
                     {
                         continue;
                     }
-                    for(int j=2; j*j< a[i]; j++)
+                    count = 0;
+                    for (int j = 2; j * j <= a[i]; j++)
                     {
-                        if(a[i] %j ==0)
-                        {
+                        if (a[i] % j == 0) {
                             count++;
                         }
                     }
-                    if(count==0)
+                    if (count == 0)
                     {
                         countNgTo++;
                     }
                 }
-                printf("Số lượng số Nguyên tố có trong mảng: %d",countNgTo);
+                printf("Số lượng số Nguyên tố có trong mảng: %d\n", countNgTo);
                 break;
             case 4:
-                max = a[0];
-                for(int i=0; i<size; i++)
+                if (size < 2)
                 {
-                    if(a[i]>max)
+                    printf("Không đủ phần tử để tìm giá trị nhỏ thứ hai\n");
+                    break;
+                }
+                min = a[0];
+                theSecondMin = a[1];
+                if (min > theSecondMin)
+                {
+                    int temp = min;
+                    min = theSecondMin;
+                    theSecondMin = temp;
+                }
+                for (int i = 2; i < size; i++)
+                {
+                    if (a[i] < min)
                     {
-                        max = a[i];
+                        theSecondMin = min;
+                        min = a[i];
+                    } else if (a[i] < theSecondMin && a[i] != min)
+                    {
+                        theSecondMin = a[i];
                     }
                 }
-                theSecondMax=-1;
-                for(int i=0; i<size; i++)
-                {
-                    if(a[i]>theSecondMax && a[i]<max)
-                    {
-                        theSecondMax =a[i];
-                    }
-                }
-                printf("Giá trị nhỏ thứ hai trong mảng: %d",theSecondMax);
+                printf("Giá trị nhỏ thứ hai trong mảng: %d\n", theSecondMin);
                 break;
             case 5:
-                printf("Nhập phần tử muốn thêm vào mảng: ");scanf("%d",&addNumber);
-                printf("Nhập vị trí muốn thêm phần tử: ");scanf("%d",&addIndex);
-                for(int i=0; i<size; i++)
+                printf("Nhập phần tử muốn thêm vào mảng: ");scanf("%d", &addNumber);
+                printf("Nhập vị trí muốn thêm phần tử: ");scanf("%d", &addIndex);
+                for (int i = size; i >= addIndex; i--)
                 {
-                    if(i+1 == addIndex)
-                    {
-                        for(int j= size+1; j>=addIndex;j--)
-                        {
-                            a[j]=a[j-1];
-                        }
-                        a[i]=addNumber;
-                    }
+                    a[i] = a[i - 1];
                 }
+                a[addIndex - 1] = addNumber;
                 size++;
                 break;
             case 6:
-                printf("Vị trí phần tử muốn xóa: ");scanf("%d",&del);
-                for(int i=0; i<size;i++)
+                printf("Vị trí phần tử muốn xóa: ");scanf("%d", &del);
+                for (int i = del - 1; i < size - 1; i++)
                 {
-                    if(i+1 == del)
-                    {
-                        for(int j=i; j<size; j++)
-                        {
-                            a[j]=a[j+1];
-                        }
-                    }
+                    a[i] = a[i + 1];
                 }
                 size--;
+                break;
             case 7:
-                for(int i=1; i<size; i++)
+                for (int i = 1; i < size; i++)
                 {
                     int key = a[i];
-                    int j=i-1;
-                    while(j>=0 && a[j]<key)
+                    int j = i - 1;
+                    while (j >= 0 && a[j] < key)
                     {
-                        a[j+1]=a[j];
+                        a[j + 1] = a[j];
                         j--;
                     }
-                    a[j]=key;
+                    a[j + 1] = key;
                 }
                 break;
             case 8:
-                printf("Nhập phần tử cần tìm: ");scanf("%d",&findNum);
-                for(int i=0; i<size-1;i++)
+                printf("Nhập phần tử cần tìm: ");
+                scanf("%d", &findNum);
+                for (int i = 0; i < size - 1; i++)
                 {
-                    for(int j=0; j<size-i-1;j++)
+                    for (int j = 0; j < size - i - 1; j++)
                     {
-                        if(a[j]<a[j+1])
-                        {
+                        if (a[j] < a[j + 1]) {
                             int temp = a[j];
-                            a[j]=a[j+1];
-                            a[j+1]=temp;
+                            a[j] = a[j + 1];
+                            a[j + 1] = temp;
                         }
                     }
-                } 
-                start=0;
-                end=size-1;
-                while(start<=end)
+                }
+                start = 0;
+                end = size - 1;
+                while (start <= end)
                 {
-                    int mid = end- (end-start)/2;
-                    if(a[mid]==findNum)
-                    {
-                        printf("Phần tử %d tồn tại trong mảng",findNum);
-                    }else if(a[mid]<findNum)
-                    {
-                        start=mid+1;
-                    }else
-                    {
-                        end=mid-1;
+                    int mid = start + (end - start) / 2;
+                    if (a[mid] == findNum) {
+                        printf("Phần tử %d tồn tại trong mảng\n", findNum);
+                        break;
+                    } else if (a[mid] < findNum) {
+                        start = mid + 1;
+                    } else {
+                        end = mid - 1;
                     }
                 }
-                if(start>end)
+                if (start > end)
                 {
-                    printf("Không có phần tử %d trong mảng",findNum);
+                    printf("Không có phần tử %d trong mảng\n", findNum);
                 }
                 break;
             case 9:
-                // for(int i=0; i<size; i++)
-                // {
-                //     aNumDontSame[i]=a[i];
-                //     for(int j=0; j<indexADS; j++)
-                //     {
-                //         if(a[i]==aNumDontSame[j])
-                //         {
-                //             break;
-                //         }
-                //     }
-                // }
+                for (int i = 0; i < size; i++)
+                {
+                    for (int j = i + 1; j < size; j++)
+                    {
+                        if (a[i] == a[j]) {
+                            for (int k = j; k < size - 1; k++)
+                            {
+                                a[k] = a[k + 1];
+                            }
+                            size--;
+                            j--;
+                        }
+                    }
+                }
+                printf("Các phần tử độc nhất trong mảng: ");
+                for (int i = 0; i < size; i++)
+                {
+                    printf("%d ", a[i]);
+                }
+                printf("\n");
+                break;
             case 10:
-                for(int i=0; i<size; i++)
+                for (int i = 0; i < size / 2; i++)
                 {
                     int temp = a[i];
-                    a[i]= a[size-i-1];
-                    a[size-i-1]=a[i];
+                    a[i] = a[size - i - 1];
+                    a[size - i - 1] = temp;
                 }
                 break;
         }
     }
-    printf("Thoát chương trình");
+    printf("Thoát chương trình\n");
 }
